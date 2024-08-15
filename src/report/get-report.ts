@@ -197,6 +197,11 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         : 'No tests found'
     sections.push(headingLine2)
 
+    // NICKY
+
+    sections.push("## Coverage")
+    sections.push(tr)
+
     if (suites.length > 0) {
       const suitesTable = table(
         ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],

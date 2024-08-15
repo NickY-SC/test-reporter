@@ -24,6 +24,7 @@ export interface TestSuite {
     timestamp?: Date
   }
   testcase: TestCase[]
+  properties: string
 }
 
 export interface TestCase {

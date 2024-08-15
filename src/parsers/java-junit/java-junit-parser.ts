@@ -30,6 +30,8 @@ export class JavaJunitParser implements TestParser {
 
   async parse(filePath: string, content: string): Promise<TestRunResult> {
     const reportOrSuite = await this.getJunitReport(filePath, content)
+
+
     const isReport = (reportOrSuite as JunitReport).testsuites !== undefined
 
     // XML might contain:
@@ -45,6 +47,7 @@ export class JavaJunitParser implements TestParser {
         testsuites: {
           $: {time: suite.$.time},
           testsuite: [suite]
+          properties: reportOrSuite["properties"]
         }
       }
     }
@@ -67,7 +70,8 @@ export class JavaJunitParser implements TestParser {
         : junit.testsuites.testsuite.map(ts => {
             const name = ts.$.name.trim()
             const time = parseFloat(ts.$.time) * 1000
-            const sr = new TestSuiteResult(name, this.getGroups(ts), time)
+            const coverage = ts.properties
+            const sr = new TestSuiteResult(name, this.getGroups(ts), time, coverage)
             return sr
           })
 

@@ -48,7 +48,12 @@ export class TestSuiteResult {
     readonly name: string,
     readonly groups: TestGroupResult[],
     private totalTime?: number
+    readonly coverage: string
   ) {}
+
+  get currentCoverage(): number {
+    return this.coverage
+  }
 
   get tests(): number {
     return this.groups.reduce((sum, g) => sum + g.tests.length, 0)
